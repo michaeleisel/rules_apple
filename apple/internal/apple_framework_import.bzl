@@ -249,7 +249,7 @@ def _apple_dynamic_framework_import_impl(ctx):
         "dynamic_framework_file",
         header_imports,
         module_map_imports,
-        _all_framework_binaries(framework_groups),
+        [] if ctx.attr.avoid_link else _all_framework_binaries(framework_groups),
     )
 
     objc_provider = _objc_provider_with_dependencies(ctx, objc_provider_fields)
@@ -352,6 +352,13 @@ target.
             providers = [
                 [apple_common.Objc, AppleFrameworkImportInfo],
             ],
+        ),
+        "avoid_link": attr.bool(
+            default = False,
+            doc = """
+Avoid linking the dynamic framework, but still include it in the app. This is useful when you want
+to manually dlopen the framework at runtime
+""",
         ),
     },
     doc = """
