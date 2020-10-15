@@ -373,7 +373,9 @@ def _bundle_partial_outputs_files(
         # Since the tree artifact bundler also runs the post processor and codesigning, this
         # action needs to run on a macOS machine.
 
-        bundling_tools = [ctx.executable._codesigningtool]
+        bundling_tools = [ctx.executable._codesigningtool] # hmm
+        if hasattr(ctx.attr, "extra"):
+            bundling_tools.extend(ctx.files.extra)
         if post_processor:
             bundling_tools.append(post_processor)
 
