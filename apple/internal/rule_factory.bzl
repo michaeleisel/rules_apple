@@ -272,6 +272,11 @@ Do not change its value.
         "extra": attr.label_list(
             allow_files = True,
         ),
+        "codesignopts": attr.string_list(
+            doc = """
+A list of strings representing extra flags that should be passed to `codesign`.
+    """,
+        ),
         "linkopts": attr.string_list(
             doc = """
 A list of strings representing extra flags that should be passed to the linker.
